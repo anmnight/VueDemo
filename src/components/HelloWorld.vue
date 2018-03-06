@@ -1,24 +1,10 @@
 <template>
   <div>
     <mt-header fixed title="固定在顶部"></mt-header>
+    <!--<video ref="video"></video>-->
 
-    <mt-tab-container v-model="active">
-      <mt-tab-container-item id="1">
-        <h1>我的订单</h1>
-      </mt-tab-container-item>
-      <mt-tab-container-item id="2">
-        <h1>我的信息</h1>
-      </mt-tab-container-item>
-    </mt-tab-container>
+    <input type="file" accept="image/*" capture="camera">
 
-    <mt-tabbar v-model="active">
-      <mt-tab-item id="1">
-        订单
-      </mt-tab-item>
-      <mt-tab-item id="2">
-        我的
-      </mt-tab-item>
-    </mt-tabbar>
   </div>
 </template>
 
@@ -30,7 +16,29 @@
     name: 'HelloWorld',
     created: function () {
 
-      console.log('app started' + this.$http);
+      let vm = this;
+
+      let file = vm.files;
+
+      // let url = vm.getObjectURL();
+      //
+      // console.log(url);
+
+      this.$watch()
+
+
+      // webRTC
+      // navigator.mediaDevices.getUserMedia({ audio: false, video: { width: 300, height: 400 } })
+      //   .then(mediaStream=>{
+      //     let video = vm.$refs.video;
+      //     video.src = window.URL.createObjectURL(mediaStream);
+      //     video.onloadedmetadata = (e) => {
+      //       video.play()
+      //     };
+      //   })
+      //   .catch(err=>{
+      //   console.log(err);
+      // });
 
 
     },
@@ -42,10 +50,22 @@
       'mt-tab-container-item': TabContainerItem
 
     },
+    methods:{
+      getObjectURL:function (file) {
+        let url = null;
+        if (window.createObjectURL !== undefined) { // basic
+          url = window.createObjectURL(file);
+        } else if (window.URL !== undefined) { // mozilla(firefox)
+          url = window.URL.createObjectURL(file);
+        } else if (window.webkitURL !== undefined) { // webkit or chrome
+          url = window.webkitURL.createObjectURL(file);
+        }
+        return url;
+      }
+    },
     data() {
       return {
-        msg: 'Test Ui Page',
-        active: "1"
+        msg: 'Test Ui Page'
       }
     }
   }
