@@ -1,10 +1,13 @@
-import api from '../components/hellowapi'
+import api from './HellowApi'
 import http from '../base/BaseRest'
 
 export default {
 
   _getTest: function () {
 
+    //封装业务流
+
+    //流式请求，Promise
 
     http._post(api._us_box,"","","")
       .then(function (resp) {

@@ -3,43 +3,35 @@
     <mt-header fixed title="固定在顶部"></mt-header>
     <!--<video ref="video"></video>-->
 
-    <input type="file" accept="image/*" capture="camera">
+
+    <mt-button class="photo_btn" v-on:click="_takePhoto" type="danger">拍照</mt-button>
 
   </div>
 </template>
 
 <script>
 
-  import {Toast, Header, Tabbar, TabItem, TabContainer, TabContainerItem} from 'mint-ui'
+  import {Toast, Header, Tabbar, TabItem, TabContainer, TabContainerItem, Button} from 'mint-ui'
+  import model from './HellomModel'
+  import camera from '../base/BaseDevice'
+
 
   export default {
     name: 'HelloWorld',
+
+    //数据处理
+    data() {
+      return {
+        msg: 'Test Ui Page'
+      }
+    },
+
     created: function () {
 
-      let vm = this;
-
-      let file = vm.files;
-
-      // let url = vm.getObjectURL();
-      //
-      // console.log(url);
-
-      this.$watch()
-
-
-      // webRTC
-      // navigator.mediaDevices.getUserMedia({ audio: false, video: { width: 300, height: 400 } })
-      //   .then(mediaStream=>{
-      //     let video = vm.$refs.video;
-      //     video.src = window.URL.createObjectURL(mediaStream);
-      //     video.onloadedmetadata = (e) => {
-      //       video.play()
-      //     };
-      //   })
-      //   .catch(err=>{
-      //   console.log(err);
-      // });
-
+//      初始数据
+//      路由测试
+//      this.$router.go("test");
+//      this._initPhoto();
 
     },
     components: {
@@ -47,25 +39,21 @@
       'mt-tabbar': Tabbar,
       'mt-tab-item': TabItem,
       'mt-tab-container': TabContainer,
-      'mt-tab-container-item': TabContainerItem
+      'mt-tab-container-item': TabContainerItem,
+      'mt-button': Button
 
     },
-    methods:{
-      getObjectURL:function (file) {
-        let url = null;
-        if (window.createObjectURL !== undefined) { // basic
-          url = window.createObjectURL(file);
-        } else if (window.URL !== undefined) { // mozilla(firefox)
-          url = window.URL.createObjectURL(file);
-        } else if (window.webkitURL !== undefined) { // webkit or chrome
-          url = window.webkitURL.createObjectURL(file);
-        }
-        return url;
-      }
-    },
-    data() {
-      return {
-        msg: 'Test Ui Page'
+    methods: {
+
+      _takePhoto: function () {
+
+
+        this.$devices._takePhoto(function (photo) {
+          console.log(photo);
+        });
+
+
+
       }
     }
   }
@@ -73,6 +61,14 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+  .photo_btn {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
+
   h1, h2 {
     font-weight: normal;
   }

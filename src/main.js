@@ -3,11 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import axios from 'axios'
+import devices from './base/BaseDevice'
 
 Vue.config.productionTip = false;
-
-Vue.prototype.$http = axios;
+Vue.prototype.$devices = devices;
 
 /* eslint-disable no-new */
 new Vue({
