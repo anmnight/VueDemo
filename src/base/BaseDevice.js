@@ -1,31 +1,80 @@
+import transform from 'lrz'
+
 export default {
-
-
-  //注册媒体事件
+  /**
+   * 注册媒体事件
+   * @private
+   */
   _registerCamera: function () {
     let vm = this;
     let input = document.getElementById("photo_input");
 
 
-    input.
+    //todo 选择同张图片不触发回调函数
     input.addEventListener("change", function (e) {
       if (input === null) {
         vm._callback(null);
       } else if (input.files.length > 0) {
-        vm._callback(input.files[0]);
+
+
+
+        transform(
+          input.files[0],
+          {
+            "quality": vm._quality
+          })
+          .then(function (rst) {
+            vm._callback(rst.file);
+          })
+          .catch(function (err) {
+            vm._callback(null);
+          });
+
+
+
+
+
+
       } else {
         vm._callback(null);
       }
     });
   },
 
+  //图片压缩
+  _zipImg:function (img,callback) {
+    transform(
+      input.files[0],
+      {
+        "quality": vm._quality
+      })
+      .then(function (rst) {
+        vm._callback(rst.file);
+      })
+      .catch(function (err) {
+        vm._callback(null);
+      });
+  },
+
   //照片输入值变化后回调
   _callback: "",
 
-  //拍照
-  _takePhoto: function (callback) {
+  //压缩率
+  _quality: "",
+
+  /**
+   * 请求拍照，返回照片
+   * @param callback 回调，返回file
+   * @param quality 压缩质量 0～1
+   * @private
+   */
+  _takePhoto: function (callback, quality) {
+    if (quality === null || quality === '') {
+      this._quality = 1;
+    }
     this._callback = callback;
-    this.document.getElementById("photo_input").click();
+    this._quality = quality;
+    document.getElementById("photo_input").click();
   },
 
   //获取图片路径

@@ -14,6 +14,8 @@
   import {Toast, Header, Tabbar, TabItem, TabContainer, TabContainerItem, Button} from 'mint-ui'
   import model from './HellomModel'
   import camera from '../base/BaseDevice'
+  import lrz from 'lrz'
+  import saver from 'file-saver'
 
 
   export default {
@@ -33,6 +35,7 @@
 //      this.$router.go("test");
 //      this._initPhoto();
 
+
     },
     components: {
       'mt-header': Header,
@@ -47,11 +50,18 @@
 
       _takePhoto: function () {
 
+        let vm = this;
 
-        this.$devices._takePhoto(function (photo) {
-          console.log(photo);
-        });
+        vm.$devices._takePhoto(function (photo) {
 
+//          let url = vm.$devices._getObjectURL(photo);
+//
+//          console.log("url : " + url);
+
+          saver.saveAs(photo,"pretty image.jpg");
+
+
+        }, 0.2);
 
 
       }

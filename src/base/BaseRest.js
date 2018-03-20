@@ -2,24 +2,27 @@ import axios from 'axios'
 
 export default {
 
-  _baseUrl: "https://api.douban.com",
+  _douBasebaseUrl: "https://api.douban.com",
 
-  /**
-   * post 请求
-   * @param url 请求url
-   * @param date post请求数据
-   * @param message esb message
-   * @param model esb model
-   * @private
-   */
-  _post: function (url, date, message, model) {
+  _mjsyBasebaseUrl: "http://api.zeusqwer.top/mjsyqt",
 
-    let fullUrl = this._baseUrl + url;
+  _post: function (url, date) {
+
+    let fullUrl = this._mjsyBasebaseUrl + url;
 
     //todo 进行header 封装
 
     return axios.post(fullUrl, date);
 
+  },
+
+
+  _get: function (url, data) {
+    let fullUrl = this._mjsyBasebaseUrl + url;
+
+    return axios.get(fullUrl, {
+      params: data
+    })
   }
 
 
