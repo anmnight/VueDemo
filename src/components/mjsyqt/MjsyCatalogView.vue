@@ -32,17 +32,25 @@
     },
 
     created: function () {
-      let vm = this;
 
-      Indicator.open({
-        text: 'Loading...',
-        spinnerType: 'fading-circle'
-      });
-      model._getCatalog(function (data) {
-        console.log(data);
-        Indicator.close();
-        vm.catalogs = data;
-      });
+      console.log('created..');
+
+
+//      let vm = this;
+
+//      Indicator.open({
+//        text: 'Loading...',
+//        spinnerType: 'fading-circle'
+//      });
+//      model._getCatalog(function (data) {
+//        console.log(data);
+//        Indicator.close();
+//        vm.catalogs = data;
+//      });
+
+
+
+
 
 
     },

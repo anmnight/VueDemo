@@ -12,12 +12,15 @@ export default new Router({
     {
       path: '/',
       name: 'catalogs',
-      component: MjsyCatalog
+      component: MjsyCatalog,
+      meta: {
+        keepAlive: true
+      }
     },
     {
-      path:'/content',
-      name:'content',
-      component:MjsyContent
+      path: '/content',
+      name: 'content',
+      component: MjsyContent
     }
     // {
     //   path: '/',

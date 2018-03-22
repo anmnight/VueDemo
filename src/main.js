@@ -4,9 +4,12 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import devices from './base/BaseDevice'
+import database from './base/BaseDB'
+
 
 Vue.config.productionTip = false;
 Vue.prototype.$devices = devices;
+Vue.prototype.$database = database;
 
 /* eslint-disable no-new */
 new Vue({
