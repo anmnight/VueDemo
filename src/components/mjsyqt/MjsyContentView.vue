@@ -1,23 +1,27 @@
 <template>
-  <div>
-    <mt-header fixed title="章节内容">
-      <router-link to="/" slot="left">
-        <mt-button  style="color: white;">返回</mt-button>
-      </router-link>
-    </mt-header>
 
+  <transition name="custom-classes-transition"
+              enter-active-class="animated slideInRight"
+              leave-active-class="animated slideInLeft">
     <div>
-      {{content}}
-    </div>
+      <mt-header fixed title="章节内容">
+        <router-link to="/" slot="left">
+          <mt-button  style="color: white;" @click="handleClose">返回</mt-button>
+        </router-link>
+      </mt-header>
 
-  </div>
+      <div style="font-size: larger;">
+        {{content}}
+      </div>
+    </div>
+  </transition>
+
 </template>
 
 <script>
 
   import {Toast, Header, Tabbar, TabItem, TabContainer, TabContainerItem, Button, Indicator, Cell} from 'mint-ui'
   import model from './MjsyModel'
-
 
   export default {
     name: 'HelloWorld',
@@ -47,17 +51,11 @@
 
 
     },
-    components: {
-      'mt-header': Header,
-      'mt-tabbar': Tabbar,
-      'mt-tab-item': TabItem,
-      'mt-tab-container': TabContainer,
-      'mt-tab-container-item': TabContainerItem,
-      'mt-button': Button,
-      'mt-cell': Cell
-
-    },
-    methods: {}
+    methods: {
+      handleClose:function () {
+        this.$router.go(-1);
+      }
+    }
   }
 </script>
 
@@ -71,21 +69,5 @@
     width: 100%;
   }
 
-  h1, h2 {
-    font-weight: normal;
-  }
 
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-
-  li {
-    display: inline-block;
-    margin: 0 10px;
-  }
-
-  a {
-    color: #42b983;
-  }
 </style>

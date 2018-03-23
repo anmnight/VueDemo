@@ -14,7 +14,7 @@ export default new Router({
       name: 'catalogs',
       component: MjsyCatalog,
       meta: {
-        keepAlive: true
+        keepAlive: true,
       }
     },
     {
@@ -27,5 +27,16 @@ export default new Router({
     //   name: 'HelloWorld',
     //   component: HelloWorld
     // }
-  ]
+  ],
+  scrollBehavior:function (to,from,savedPosition) {
+
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return {
+        x: 0,
+        y: 0
+      }
+    }
+  }
 })

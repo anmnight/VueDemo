@@ -7,12 +7,12 @@ export default {
     let open = database._openDB();
     open.onsuccess = function () {
       let db = open.result;
-      let tx = db.transaction('Catalogs','readwrite');
-      let store = tx.objectStore('Catalogs');
+      let tx = db.transaction('catalogs','readwrite');
+      let store = tx.objectStore('catalogs');
 
-      console.log(store);
-
-      store.put(catalogs);
+      for (let i = 0; i < catalogs.length; i++) {
+        store.add(catalogs[i]);
+      }
 
       tx.oncomplete = function () {
         db.close();
@@ -21,13 +21,16 @@ export default {
   }
   ,
   _getAllCatalogs:function (callback) {
-    let open = this.$database._openDB();
+    let open = database._openDB();
     open.onsuccess = function () {
       let db = open.result;
-      let tx = db.transaction('Catalogs','readwrite');
-      let store = tx.objectStore('Catalogs');
+      let tx = db.transaction('catalogs','readwrite');
+      let store = tx.objectStore('catalogs');
 
-      callback(store.all());
+      let request = store.getAll();
+      request.onsuccess = function (e) {
+        callback(e.target.result);
+      };
 
       tx.oncomplete = function () {
         db.close();

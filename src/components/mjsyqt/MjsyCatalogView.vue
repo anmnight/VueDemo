@@ -1,23 +1,24 @@
 <template>
-  <div>
-    <mt-header fixed title="章节列表"></mt-header>
-    <!--<mt-cell v-for="(catalog,index) in catalogs" @click="_goContent(index)">-->
-    <!--{{catalog.name}}-->
-    <!--</mt-cell>-->
 
-    <li v-for="(catalog,index) in catalogs" @click="_goContent(index)">
-      {{catalog.name}}
-    </li>
+  <transition name="custom-classes-transition"
+              enter-active-class="animated slideInLeft">
+            <div>
 
-  </div>
+              <mt-cell v-for="(catalog,index) in catalogs" >
+                <div @click="_goContent(index)">
+                  {{catalog.name}}
+                </div>
+              </mt-cell>
+
+            </div>
+    </transition>
 </template>
 
 <script>
 
-  import {Toast, Header, Tabbar, TabItem, TabContainer, TabContainerItem, Button, Indicator, Cell} from 'mint-ui'
   import model from './MjsyModel'
   import dao from './model/CatalogsDao'
-
+  import {Toast, Header, Tabbar, TabItem, TabContainer, TabContainerItem, Button, Indicator, Cell} from 'mint-ui'
 
   export default {
     name: 'HelloWorld',
@@ -30,42 +31,30 @@
       }
     },
 
-    created: function () {
-
+    mounted : function () {
       let vm = this;
-
-      Indicator.open({
-        text: 'Loading...',
-        spinnerType: 'fading-circle'
+      dao._getAllCatalogs(function (catalogs) {
+        if (catalogs.length===0){
+          model._getCatalog(function (catalogs) {
+            dao._saveCatalogs(catalogs);
+            if(vm.catalogs===''||vm.catalogs===undefined){
+              vm.catalogs = catalogs;
+            }
+          })
+        }else {
+          if(vm.catalogs===''||vm.catalogs===undefined){
+            vm.catalogs = catalogs;
+          }
+        }
       });
-      model._getCatalog(function (data) {
-        console.log(data);
-        Indicator.close();
-        vm.catalogs = data;
-        dao._saveCatalogs(data);
-      });
-
-
-
-    },
-    components: {
-      'mt-header': Header,
-      'mt-tabbar': Tabbar,
-      'mt-tab-item': TabItem,
-      'mt-tab-container': TabContainer,
-      'mt-tab-container-item': TabContainerItem,
-      'mt-button': Button,
-      'mt-cell': Cell
 
     },
     methods: {
       _goContent: function (index) {
-
         let vm = this;
-
         this.$router.push({
           name: 'content',
-          params: {catalog:vm.catalogs[index]}
+          params: {catalog: vm.catalogs[index]}
         });
       }
     }
@@ -75,18 +64,8 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
-  h1, h2 {
-    font-weight: normal;
-  }
-
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-
   li {
     display: inline-block;
-    margin: 0 10px;
     width: 100%;
     height: 30px;
   }
