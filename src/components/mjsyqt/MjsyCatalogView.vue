@@ -1,8 +1,6 @@
 <template>
   <div>
     <mt-header fixed title="章节列表"></mt-header>
-    <!--<video ref="video"></video>-->
-
     <!--<mt-cell v-for="(catalog,index) in catalogs" @click="_goContent(index)">-->
     <!--{{catalog.name}}-->
     <!--</mt-cell>-->
@@ -18,6 +16,7 @@
 
   import {Toast, Header, Tabbar, TabItem, TabContainer, TabContainerItem, Button, Indicator, Cell} from 'mint-ui'
   import model from './MjsyModel'
+  import dao from './model/CatalogsDao'
 
 
   export default {
@@ -33,23 +32,18 @@
 
     created: function () {
 
-      console.log('created..');
+      let vm = this;
 
-
-//      let vm = this;
-
-//      Indicator.open({
-//        text: 'Loading...',
-//        spinnerType: 'fading-circle'
-//      });
-//      model._getCatalog(function (data) {
-//        console.log(data);
-//        Indicator.close();
-//        vm.catalogs = data;
-//      });
-
-
-
+      Indicator.open({
+        text: 'Loading...',
+        spinnerType: 'fading-circle'
+      });
+      model._getCatalog(function (data) {
+        console.log(data);
+        Indicator.close();
+        vm.catalogs = data;
+        dao._saveCatalogs(data);
+      });
 
 
 

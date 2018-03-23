@@ -30,19 +30,13 @@
       //注册数据库
       let open = database._openDB();
 
-//      open.onupgradeneeded = function () {
-//        console.log('version changed..');
-//      };
 
-//      database._onDbVersionChanged()= function () {
-//
-//      }
+      database._onDbVersionChanged(function (e) {
+        let db = open.result;
+        db.createObjectStore('Catalogs', {keyPath: 'url'});
+      })
 
-      let changed = database._onDbVersionChanged();
 
-      changed = function () {
-
-      }
 
 
     },

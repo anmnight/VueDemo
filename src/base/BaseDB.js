@@ -1,6 +1,6 @@
 export default {
   db:{
-    version :3,
+    version :9,
     name:'doumovie',
     open:undefined
 
@@ -13,15 +13,16 @@ export default {
     let indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
     vm.db.open = indexedDB.open(vm.db.name,vm.db.version);
     return vm.db.open;
-
   },
 
   _closeDB:function () {
     this.db.open.close();
   },
 
-  _onDbVersionChanged:function () {
-    return this.db.open.onupgradeneeded;
+  _onDbVersionChanged:function (callback) {
+     this.db.open.onupgradeneeded = function (e) {
+       callback(e);
+     }
   }
 
 
